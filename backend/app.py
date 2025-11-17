@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
 
 # Initialize data processor
-DATA_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'Airbnb_Open_Data.csv')
+DATA_PATH = os.path.join(os.path.dirname(__file__), 'data', 'Airbnb_Open_Data.csv')
 processor = AirbnbDataProcessor(DATA_PATH)
 
 # Load and process data on startup
