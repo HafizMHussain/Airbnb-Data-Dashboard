@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import API_URL from '../../config';
 import { TrendingUp } from 'lucide-react';
 
 const PriceTrends = ({ filters }) => {
@@ -17,7 +18,7 @@ const PriceTrends = ({ filters }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/price-trends?${queryParams}`);
+      const response = await fetch(`${API_URL}/api/price-trends?${queryParams}`);
       const result = await response.json();
       
       // Transform data for chart

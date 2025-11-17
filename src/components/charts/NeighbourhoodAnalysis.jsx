@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import API_URL from '../../config';
 import { MapPin } from 'lucide-react';
 
 const NeighbourhoodAnalysis = ({ filters }) => {
@@ -17,7 +18,7 @@ const NeighbourhoodAnalysis = ({ filters }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/neighbourhoods?limit=10&${queryParams}`);
+      const response = await fetch(`${API_URL}/api/neighbourhoods?limit=10&${queryParams}`);
       const result = await response.json();
       
       setData(result);

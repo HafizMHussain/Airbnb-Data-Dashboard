@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { MapPin } from 'lucide-react';
+import API_URL from '../../config';
 import 'leaflet/dist/leaflet.css';
 
 // Component to auto-fit map bounds
@@ -64,7 +65,7 @@ const MapVisualization = ({ filters }) => {
         params.set('instant_bookable', filters.instant_bookable);
       }
 
-      const url = `http://localhost:5000/api/map-data?${params.toString()}`;
+      const url = `${API_URL}/api/map-data?${params.toString()}`;
       console.log('Map URL:', url);
 
       const response = await fetch(url);

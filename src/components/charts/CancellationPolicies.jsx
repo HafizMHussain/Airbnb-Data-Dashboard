@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import API_URL from '../../config';
 import { FileText } from 'lucide-react';
 
 const CancellationPolicies = ({ filters }) => {
@@ -19,7 +20,7 @@ const CancellationPolicies = ({ filters }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/cancellation-policies?${queryParams}`);
+      const response = await fetch(`${API_URL}/api/cancellation-policies?${queryParams}`);
       const result = await response.json();
       
       setData(result);

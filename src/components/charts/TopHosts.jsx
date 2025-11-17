@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import API_URL from '../../config';
 import { Users } from 'lucide-react';
 
 const TopHosts = ({ filters }) => {
@@ -17,7 +18,7 @@ const TopHosts = ({ filters }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/top-hosts?limit=10&${queryParams}`);
+      const response = await fetch(`${API_URL}/api/top-hosts?limit=10&${queryParams}`);
       const result = await response.json();
       
       // Truncate long host names

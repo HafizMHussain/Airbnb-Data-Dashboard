@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import API_URL from '../../config';
 import { Calendar } from 'lucide-react';
 
 const AvailabilityTrends = ({ filters }) => {
@@ -17,7 +18,7 @@ const AvailabilityTrends = ({ filters }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/availability-trends?${queryParams}`);
+      const response = await fetch(`${API_URL}/api/availability-trends?${queryParams}`);
       const result = await response.json();
       
       setData(result);

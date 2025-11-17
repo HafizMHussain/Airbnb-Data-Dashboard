@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import API_URL from '../config';
 import KPICards from './KPICards';
 import PriceDistribution from './charts/PriceDistribution';
 import PriceTrends from './charts/PriceTrends';
@@ -24,7 +25,7 @@ const Dashboard = ({ filters, sidebarOpen }) => {
         Object.entries(filters).filter(([_, v]) => v && v !== 'all')
       ).toString();
       
-      const response = await fetch(`http://localhost:5000/api/summary?${queryParams}`);
+      const response = await fetch(`${API_URL}/api/summary?${queryParams}`);
       const data = await response.json();
       setSummary(data);
     } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import API_URL from './config';
 import './App.css';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
 
   useEffect(() => {
     // Fetch filter options on mount
-    fetch('http://localhost:5000/api/filter-options')
+    fetch(`${API_URL}/api/filter-options`)
       .then(res => res.json())
       .then(data => setFilterOptions(data))
       .catch(err => console.error('Error fetching filter options:', err));
