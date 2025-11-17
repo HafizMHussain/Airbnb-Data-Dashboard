@@ -2,10 +2,17 @@
 
 A professional, full-stack interactive data visualization dashboard for analyzing 102,000+ Airbnb listings across NYC. Built with modern web technologies and featuring real-time filtering, interactive maps, and comprehensive analytics.
 
-![Dashboard Preview](https://img.shields.io/badge/Status-Production-success)
+![Dashboard Preview](https://img.shields.io/badge/Status-Live-success)
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![React](https://img.shields.io/badge/React-18.2-61dafb)
 ![Flask](https://img.shields.io/badge/Flask-3.0-black)
+![Deployed](https://img.shields.io/badge/Deployed-Vercel-black)
+
+## 🌐 Live Demo
+
+**🚀 [View Live Dashboard](https://your-frontend-url.vercel.app)**
+
+> Deployed on Vercel with serverless backend architecture
 
 ## 🚀 Features
 
@@ -57,24 +64,35 @@ A professional, full-stack interactive data visualization dashboard for analyzin
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repository
+### Option 1: Use Live Deployment (Recommended)
+Simply visit the [Live Dashboard](https://your-frontend-url.vercel.app) - no installation needed!
+
+### Option 2: Run Locally
+
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/HafizMHussain/Airbnb-Data-Dashboard.git
 cd Airbnb-Data-Dashboard
 ```
 
-### 2. Backend Setup
+#### 2. Backend Setup
 ```bash
+# Navigate to backend folder
+cd backend
+
 # Install Python dependencies
 pip install -r requirements.txt
 
 # Start Flask server
-python backend/app.py
+python app.py
 ```
 ✅ Backend running on `http://localhost:5000`
 
-### 3. Frontend Setup
+#### 3. Frontend Setup
 ```bash
+# In a new terminal, return to root directory
+cd ..
+
 # Install Node dependencies
 npm install
 
@@ -83,19 +101,54 @@ npm run dev
 ```
 ✅ Frontend running on `http://localhost:5173`
 
-### 4. Access the Dashboard
+#### 4. Access the Dashboard
 Open your browser and navigate to `http://localhost:5173`
+
+## ☁️ Deployment
+
+This project is deployed on Vercel using a two-project architecture:
+
+### Backend Deployment
+- **Platform**: Vercel Serverless Functions
+- **Root Directory**: `backend/`
+- **Runtime**: Python 3.9
+- **Environment Variables**:
+  ```
+  FLASK_ENV=production
+  FLASK_DEBUG=False
+  CORS_ORIGINS=https://your-frontend-url.vercel.app
+  ```
+
+### Frontend Deployment
+- **Platform**: Vercel
+- **Framework**: Vite
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Environment Variables**:
+  ```
+  VITE_API_URL=https://your-backend-url.vercel.app
+  ```
+
+### Deploy Your Own
+1. Fork this repository
+2. Import to Vercel (twice - once for backend, once for frontend)
+3. Configure environment variables as shown above
+4. Deploy!
 
 ## 📁 Project Structure
 
 ```
 Dashboard Big Data/
-├── 📂 data/
-│   └── Airbnb_Open_Data.csv         # Dataset (102,599 listings)
-│
 ├── 📂 backend/
+│   ├── data/
+│   │   └── Airbnb_Open_Data.csv     # Dataset (102,599 listings)
 │   ├── app.py                       # Flask API server (11 endpoints)
-│   └── data_processor.py            # Data cleaning & processing engine
+│   ├── data_processor.py            # Data cleaning & processing engine
+│   ├── requirements.txt             # Python dependencies
+│   └── vercel.json                  # Vercel serverless config
+│
+├── 📂 data/
+│   └── Airbnb_Open_Data.csv         # Original dataset
 │
 ├── 📂 src/
 │   ├── 📂 components/
@@ -118,8 +171,8 @@ Dashboard Big Data/
 ├── 📂 public/                       # Static assets
 ├── index.html                       # HTML template
 ├── package.json                     # Node dependencies
-├── requirements.txt                 # Python dependencies
 ├── vite.config.js                   # Vite configuration
+├── vercel.json                      # Frontend Vercel config
 └── README.md                        # This file
 ```
 
@@ -173,18 +226,33 @@ All endpoints support query parameters for filtering:
 
 ## 🔧 Development
 
+### Local Development
+```bash
+# Backend
+cd backend
+python app.py
+
+# Frontend
+npm run dev
+```
+
 ### Build for Production
 ```bash
 npm run build
 ```
 
-### Run Tests
-```bash
-# Python tests
-pytest
+### Environment Variables
 
-# JavaScript tests
-npm test
+**Backend (.env)**
+```
+FLASK_ENV=production
+FLASK_DEBUG=False
+CORS_ORIGINS=http://localhost:5173
+```
+
+**Frontend (.env)**
+```
+VITE_API_URL=http://localhost:5000
 ```
 
 ## 📊 Dataset
@@ -192,8 +260,34 @@ npm test
 - **Source**: Airbnb Open Data (NYC)
 - **Records**: 102,599 listings
 - **Columns**: 26 fields including price, location, reviews, host info, availability
-- **Coverage**: All 5 NYC boroughs
+- **Coverage**: All 5 NYC boroughs (Manhattan, Brooklyn, Queens, Bronx, Staten Island)
 - **Time Period**: Multi-year dataset with construction years from 2003-2022
+- **File Size**: ~25 MB
+
+## 🏗️ Architecture
+
+### Backend
+- RESTful API built with Flask
+- Pandas-based data processing pipeline
+- Serverless deployment on Vercel
+- CSV data loaded on cold start (~2-3s)
+- Efficient filtering with query parameters
+
+### Frontend
+- Single Page Application (SPA) with React
+- Vite for fast builds and HMR
+- Component-based architecture
+- Real-time state management
+- Responsive CSS Grid/Flexbox layout
+
+### Data Flow
+```
+CSV File → Pandas DataFrame → Data Cleaning → Calculated Fields
+    ↓
+Flask API Endpoints → JSON Response
+    ↓
+React Frontend → Recharts/Leaflet → Interactive Dashboard
+```
 
 ## 🤝 Contributing
 
@@ -224,14 +318,31 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📸 Screenshots
 
 ### Dashboard Overview
-![Dashboard](https://via.placeholder.com/800x400?text=Dashboard+Overview)
+*Full dashboard with KPI cards, charts, and interactive map*
 
-### Interactive Map
-![Map View](https://via.placeholder.com/800x400?text=Interactive+Map)
+### Interactive Map with Filters
+*Leaflet map showing 2,000+ listings color-coded by price range*
 
-### Filter Panel
-![Filters](https://via.placeholder.com/800x400?text=Filter+Controls)
+### Price Analytics
+*Price distribution histogram and trends over construction years*
+
+---
+
+## 🛣️ Roadmap
+
+- [ ] Add date range filters
+- [ ] Implement user authentication
+- [ ] Add favorite listings feature
+- [ ] Export data to CSV/PDF
+- [ ] Add comparison mode
+- [ ] Mobile app version
 
 ---
 
 ⭐ **Star this repository if you find it helpful!**
+
+📧 **Questions?** Open an issue or reach out!
+
+---
+
+**Made with ❤️ by Hafiz M Hussain**
