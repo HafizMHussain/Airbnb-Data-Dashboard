@@ -23,13 +23,28 @@ function App() {
   });
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    // Log API URL for debugging
+    console.log('API URL:', API_URL);
+    
     // Fetch filter options on mount
     fetch(`${API_URL}/api/filter-options`)
-      .then(res => res.json())
-      .then(data => setFilterOptions(data))
-      .catch(err => console.error('Error fetching filter options:', err));
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log('Filter options loaded:', data);
+        setFilterOptions(data);
+      })
+      .catch(err => {
+        console.error('Error fetching filter options:', err);
+        setError('Failed to connect to backend. Please check if backend is running.');
+      });
   }, []);
 
   const handleFilterChange = (newFilters) => {
@@ -50,6 +65,20 @@ function App() {
 
   return (
     <div className="app">
+      {error && (
+        <div style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: '#ff4444',
+          color: 'white',
+          padding: '15px',
+          borderRadius: '8px',
+          zIndex: 9999
+        }}>
+          {error}
+        </div>
+      )}
       <Sidebar 
         filters={filters}
         filterOptions={filterOptions}

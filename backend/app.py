@@ -14,7 +14,14 @@ sys.path.insert(0, os.path.dirname(__file__))
 from data_processor import AirbnbDataProcessor
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend requests
+
+# Configure CORS - allow requests from frontend
+cors_origins = os.getenv('CORS_ORIGINS', '*')
+if cors_origins and cors_origins != '*':
+    cors_origins = [origin.strip() for origin in cors_origins.split(',')]
+else:
+    cors_origins = '*'
+CORS(app, origins=cors_origins, supports_credentials=True)
 
 # Initialize data processor
 DATA_PATH = os.path.join(os.path.dirname(__file__), 'data', 'Airbnb_Open_Data.csv')
