@@ -10,7 +10,7 @@ A professional, full-stack interactive data visualization dashboard for analyzin
 
 ## 🌐 Live Demo
 
-**🚀 [View Live Dashboard](https://your-frontend-url.vercel.app)**
+**🚀 [View Live Dashboard](https://airbnb-data-dashboard-frontend.vercel.app)**
 
 > Deployed on Vercel with serverless backend architecture
 
